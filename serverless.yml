@@ -2,20 +2,18 @@ service: email-api
 
 provider:
   name: aws
-  runtime: nodejs18.x
-  region: us-east-1
-  environment:
-    SMTP_HOST: smtp.gmail.com
-    SMTP_PORT: 587
-    SMTP_USER: ${env:SMTP_USER}
-    SMTP_PASS: ${env:SMTP_PASS}
+  runtime: python3.9
 
 plugins:
   - serverless-offline
 
+custom:
+  serverless-offline:
+    httpPort: 4000  # Use port 4000 instead of default 3002
+
 functions:
   sendEmail:
-    handler: handler.sendEmail
+    handler: handler.send_email
     events:
       - http:
           path: send-email
